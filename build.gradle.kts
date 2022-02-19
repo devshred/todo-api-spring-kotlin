@@ -1,7 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 import com.palantir.gradle.docker.DockerExtension
 import com.palantir.gradle.docker.DockerRunExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "2.6.3"
@@ -14,6 +15,7 @@ plugins {
     id("com.palantir.docker") version "0.32.0"
     id("com.palantir.docker-run") version "0.32.0"
     id("com.github.ben-manes.versions") version "0.42.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
 group = "todo"
@@ -83,5 +85,13 @@ tasks {
                 }
             }
         }
+    }
+}
+
+ktlint {
+    version.set("0.44.0")
+    enableExperimentalRules.set(true)
+    reporters {
+        reporter(CHECKSTYLE)
     }
 }
