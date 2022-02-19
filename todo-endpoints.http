@@ -1,0 +1,30 @@
+### Create first todo item.
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "text": "Do something",
+  "done": false
+}
+
+### Create second todo item.
+
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "text": "Do something else",
+  "done": false
+}
+
+
+### Get all items.
+GET http://localhost:8080/
+
+
+### Get an item.
+GET http://localhost:8080/cdf1542e-c6d7-4c26-a57b-bd90e71f6a85
+
+
+### Delete an item.
+DELETE http://localhost:8080/cdf1542e-c6d7-4c26-a57b-bd90e71f6a85
