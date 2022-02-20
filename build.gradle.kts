@@ -2,6 +2,7 @@ import com.palantir.gradle.docker.DockerExtension
 import com.palantir.gradle.docker.DockerRunExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 val springdocVersion: String = "1.6.6"
@@ -81,7 +82,7 @@ val oasPackage = "todo"
 val oasSpecLocation = "src/main/resources/todo-spec.yaml"
 val oasGenOutputDir = project.layout.buildDirectory.dir("generated-oas")
 
-tasks.register("generateApi", org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+val generateApiSpec = tasks.register("generateApiSpec", GenerateTask::class) {
     input = project.file(oasSpecLocation).path
     outputDir.set(oasGenOutputDir.get().toString())
     modelPackage.set("$oasPackage.model")
@@ -96,6 +97,10 @@ tasks.register("generateApi", org.openapitools.generator.gradle.plugin.tasks.Gen
             "openApiNullable" to "false"
         )
     )
+}
+
+tasks.named("compileKotlin") {
+    dependsOn(generateApiSpec)
 }
 
 java.sourceSets["main"].java {
@@ -124,5 +129,9 @@ ktlint {
     enableExperimentalRules.set(true)
     reporters {
         reporter(CHECKSTYLE)
+    }
+    filter {
+        exclude("**/todo/api/**")
+        exclude("**/todo/model/**")
     }
 }
