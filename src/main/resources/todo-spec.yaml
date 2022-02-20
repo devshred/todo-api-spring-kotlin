@@ -47,7 +47,7 @@ paths:
               $ref: '#/components/schemas/CreateTodoItem'
         required: true
       responses:
-        200:
+        201:
           description: Successful operation.
           content:
             application/json:
