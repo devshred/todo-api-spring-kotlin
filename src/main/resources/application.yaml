@@ -15,5 +15,12 @@ spring:
       mode: always
       schema-locations: classpath:db/schema.sql
 
+#  kafka:
+#    template:
+#      default-topic: todo
+#    producer:
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#    bootstrap-servers: localhost:29092
+
 api:
   base-path: /api/v1
