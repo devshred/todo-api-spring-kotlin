@@ -1,0 +1,203 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2022-02-20T14:29:05.555Z",
+  "__export_source": "insomnia.desktop.app:v2021.7.2",
+  "resources": [
+    {
+      "_id": "req_205b8aad0c864113ba9f685f8d8ebf2d",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645363089728,
+      "created": 1645363075374,
+      "url": "{{ _.base_url }}/",
+      "name": "Get all todos",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1645363075374,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "parentId": null,
+      "modified": 1645362878181,
+      "created": 1645362878181,
+      "name": "Todo API",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_f1b8cb81a9194d35b8d22870eb23a861",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645367215554,
+      "created": 1645366233498,
+      "url": "{{ _.base_url }}",
+      "name": "Create todo item",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"text\": \"Something I need to do.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_8e38aab925ef48058d9e493e223fa4f0",
+          "name": "Content-Type",
+          "value": "application/json",
+          "description": ""
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1645363075324,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3b22326fe09947da81325a35557be07c",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645367225649,
+      "created": 1645367022349,
+      "url": "{{ _.base_url }}/uuid",
+      "name": "Get todo item",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1645363075274,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a6a75defb8884f419acda920b02ad151",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645367230808,
+      "created": 1645367061796,
+      "url": "{{ _.base_url }}/uuid",
+      "name": "Change status",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"done\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_10897822dc194199877424f3d5d25da7"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1645363075224,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8289e4970fec4af4a9b5084f60d3bde9",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645367236578,
+      "created": 1645367189339,
+      "url": "{{ _.base_url }}/uuid",
+      "name": "Delete todo item",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1645363075174,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_9c6bffad4d80844d7f777bce27ff07f0c4399a45",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645362971166,
+      "created": 1645362878195,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": {},
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1645362878195,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_9c6bffad4d80844d7f777bce27ff07f0c4399a45",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645362878197,
+      "created": 1645362878197,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_4d9cf8bfc4c84ede81d30c43d4524645",
+      "parentId": "wrk_eb7f4c55de7b431595218ff9701a5e51",
+      "modified": 1645362878184,
+      "created": 1645362878184,
+      "fileName": "Todo API",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_a70d32279dcd43bfb476977452c5ae6f",
+      "parentId": "env_9c6bffad4d80844d7f777bce27ff07f0c4399a45",
+      "modified": 1645363141495,
+      "created": 1645362974405,
+      "name": "local",
+      "data": {
+        "base_url": "http://localhost:8080/api/v1/todo"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1645362974405,
+      "_type": "environment"
+    }
+  ]
+}

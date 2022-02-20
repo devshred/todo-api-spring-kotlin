@@ -1,0 +1,157 @@
+openapi: 3.0.2
+info:
+  description: |-
+    This defines the API of a todo-app server based on the OpenAPI 3.0 specification. This server will be used in a 
+    workshop concerning Kubernetes deployments.
+
+    Some useful links:
+    - [The API server RI](https://github.com/devshred/todo-api-spring-kotlin)
+    - [The API frontend](https://github.com/devshred/todo-web)
+  version: 1.0.0
+  title: Todo app - OpenAPI 3.0
+servers:
+  - url: 'http://localhost:8080/api/v1'
+    description: local
+tags:
+  - name: todo
+    description: A todo with done-status.
+paths:
+  /todo/:
+    get:
+      tags:
+        - todo
+      summary: Creates a list of all TodoItems (no matter if already done or not).
+      operationId: allTodoItems
+      responses:
+        200:
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TodoItem'
+      x-codegen-request-body-name: body
+  /todo:
+    post:
+      tags:
+        - todo
+      summary: Create TodoItem.
+      description: Create a new TodoItem.
+      operationId: createTodoItem
+      requestBody:
+        description: New TodoItem w/o ID and done-status.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoItem'
+        required: true
+      responses:
+        200:
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoItem'
+  /todo/{id}:
+    get:
+      tags:
+        - todo
+      summary: Get TodoItem by UUID.
+      operationId: getTodoItem
+      parameters:
+        - name: id
+          in: path
+          description: The UUID of the todo you are looking for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoItem'
+        404:
+          description: TodoItem not found.
+          content: { }
+    patch:
+      tags:
+        - todo
+      summary: Set status of an existing TodoItem by UUID.
+      description: Sets the status (done, not done) of a TodoItem by UUID.
+      operationId: changeTodoItem
+      parameters:
+        - name: id
+          in: path
+          description: The UUID of the todo you are looking for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Status of a todo item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoStatus'
+        required: true
+      responses:
+        204:
+          description: Successful operation.
+        404:
+          description: Todo item not found.
+          content: { }
+    delete:
+      tags:
+        - todo
+      summary: Delete todo item by UUID.
+      description: Delete todo item by UUID.
+      operationId: deleteTodoItem
+      parameters:
+        - name: id
+          in: path
+          description: UUID of the todo item that needs to be deleted.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: Successful operation.
+          content: { }
+        404:
+          description: Todo item not found.
+          content: { }
+components:
+  schemas:
+    TodoItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        text:
+          type: string
+          example: Something I need to do.
+        done:
+          type: boolean
+          description: Indicates, if the todo is already done.
+    CreateTodoItem:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          example: Something I need to do.
+    TodoStatus:
+      type: object
+      required:
+        - done
+      properties:
+        done:
+          type: boolean
+          description: Indicates, if the todo is already done.

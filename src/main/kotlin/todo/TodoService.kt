@@ -4,29 +4,33 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import org.springframework.stereotype.Service
+import todo.model.CreateTodoItem
+import todo.model.TodoItem
+import todo.model.TodoStatus
+import java.util.UUID
 
 @Service
 class TodoService(val db: TodoRepository) {
-    fun allTodoItems(): List<TodoItem> = db.allTodoItems()
+    fun allTodoItems(): List<TodoItem> = db.allTodoItems().map { i -> i.toTodoItem() }
 
-    fun save(todoItem: TodoItem): TodoItem {
-        return db.save(todoItem.apply { done = false })
+    fun save(todoItem: CreateTodoItem): TodoItem {
+        return db.save(todoItem.toEntity()).toTodoItem()
     }
 
-    fun findById(id: String): Either<BadState, TodoItem> {
-        val optional = db.findById(id)
+    fun findById(id: UUID): Either<BadState, TodoItem> {
+        val optional = db.findById(id.toString())
         return if (optional.isPresent) {
-            optional.get().right()
+            optional.get().toTodoItem().right()
         } else {
             BadState.NotFound("todo item not found").left()
         }
     }
 
-    fun update(id: String, patchedObject: TodoItem): Either<BadState, GoodState> {
-        val optional = db.findById(id)
+    fun updateStatus(id: UUID, todoStatus: TodoStatus): Either<BadState, GoodState> {
+        val optional = db.findById(id.toString())
         return if (optional.isPresent) {
             val dbObject = optional.get()
-            dbObject.done = patchedObject.done
+            dbObject.done = todoStatus.done
             db.save(dbObject)
             GoodState.Updated("updated item $id").right()
         } else {
@@ -34,8 +38,8 @@ class TodoService(val db: TodoRepository) {
         }
     }
 
-    fun delete(id: String): Either<BadState, GoodState> {
-        val optional = db.findById(id)
+    fun delete(id: UUID): Either<BadState, GoodState> {
+        val optional = db.findById(id.toString())
         return if (optional.isPresent) {
             db.delete(optional.get())
             GoodState.Deleted("deleted item $id").right()
@@ -53,3 +57,9 @@ sealed class GoodState {
     data class Updated(val reason: String) : GoodState()
     data class Deleted(val reason: String) : GoodState()
 }
+
+fun CreateTodoItem.toEntity(): TodoEntity = TodoEntity(
+    id = null,
+    text = this.text,
+    done = false
+)

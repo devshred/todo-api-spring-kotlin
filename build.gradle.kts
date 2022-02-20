@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+val springdocVersion: String = "1.6.6"
+
 plugins {
     id("org.springframework.boot") version "2.6.3"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
@@ -14,6 +16,7 @@ plugins {
 
     id("com.palantir.docker") version "0.32.0"
     id("com.palantir.docker-run") version "0.32.0"
+    id("org.openapi.generator") version "5.4.0"
     id("com.github.ben-manes.versions") version "0.42.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
@@ -33,6 +36,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.springdoc:springdoc-openapi-data-rest:$springdocVersion")
+    implementation("org.springdoc:springdoc-openapi-ui:$springdocVersion")
+    implementation("org.springdoc:springdoc-openapi-kotlin:$springdocVersion")
     implementation("io.arrow-kt:arrow-core:1.0.1")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -69,6 +75,31 @@ configure<DockerRunExtension> {
     daemonize = false
     clean = true
     ports("7001:8080")
+}
+
+val oasPackage = "todo"
+val oasSpecLocation = "src/main/resources/todo-spec.yaml"
+val oasGenOutputDir = project.layout.buildDirectory.dir("generated-oas")
+
+tasks.register("generateApi", org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+    input = project.file(oasSpecLocation).path
+    outputDir.set(oasGenOutputDir.get().toString())
+    modelPackage.set("$oasPackage.model")
+    apiPackage.set("$oasPackage.api")
+    packageName.set(oasPackage)
+    generatorName.set("kotlin-spring")
+    configOptions.set(
+        mapOf(
+            "dateLibrary" to "java8",
+            "interfaceOnly" to "true",
+            "useTags" to "true",
+            "openApiNullable" to "false"
+        )
+    )
+}
+
+java.sourceSets["main"].java {
+    srcDir("${oasGenOutputDir.get()}/src/main/kotlin")
 }
 
 tasks {
