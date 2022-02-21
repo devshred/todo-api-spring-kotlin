@@ -78,7 +78,7 @@ configure<DockerRunExtension> {
     image = dockerImageName
     daemonize = false
     clean = true
-    ports("7001:8080")
+    ports("8080:8080")
 }
 
 val oasPackage = "todo"

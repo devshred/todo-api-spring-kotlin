@@ -3,7 +3,7 @@
 ## Run with gradle
 
 ```shell
-./gradlew bootRun --args='--server.port=7001'
+./gradlew bootRun
 ```
 
 ## Run with docker
@@ -23,5 +23,5 @@
 or
 
 ```shell
-docker run --rm -p 7001:8080 --name todo-api quay.io/johschmidtcc/todo-api-spring-kotlin
+docker run --rm -p 8080:8080 --name todo-api quay.io/johschmidtcc/todo-api-spring-kotlin
 ```
