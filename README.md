@@ -24,3 +24,10 @@ It implements an [OpenAPI spec](https://raw.githubusercontent.com/devshred/todo-
 ```shell
 docker run --rm -p 8080:8080 --name todo-api quay.io/johschmidtcc/todo-api-spring-kotlin
 ```
+
+## Start a frontend to test the app
+```shell
+docker run --rm -p 8000:80 --name todo-web -e VUE_APP_API_BASE_URL=http://localhost:8080/api/v1/todo/ quay.io/johschmidtcc/todo-web
+```
+
+… or use the provided [Insomnia](https://insomnia.rest) or [Postman](https://www.postman.com) collections.
